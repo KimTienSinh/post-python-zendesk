@@ -4,6 +4,7 @@ import os
 import json
 import urllib.parse
 from bottle import route, run, request, response, template
+from pathlib import Path
 
 @route('/')
 def show_home():
@@ -54,7 +55,7 @@ def show_admin_ui():
     return_url = request.forms['return_url']
     name = request.forms['name'] or 'Help Center community channel'
     
-    topic_id = '9990311070607'
+    topic_id = ''
     if 'metadata' in request.forms and request.forms['metadata']:
         metadata = request.forms['metadata']
         metadata = urllib.parse.unquote(metadata)
@@ -97,10 +98,8 @@ def serve_manifest():
 
 @route('/random_numbers', method='GET')
 def get_random_numbers():
-    # Tạo danh sách 10 số thập phân ngẫu nhiên trong khoảng 0 đến 1
     random_numbers = [round(random.uniform(0, 1), 2) for _ in range(10)]
 
-    # Thiết lập header để trả về JSON
     response.content_type = 'application/json'
     return json.dumps({"random_numbers": random_numbers})
 
